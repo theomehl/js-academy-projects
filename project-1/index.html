@@ -61,10 +61,9 @@
 			let showPassword = document.querySelector('#show-password');
 			let password = document.querySelector('#password');
 			showPassword.addEventListener('click', function(event) {
+				password.type = 'password';
 				if (showPassword.checked) {
 					password.type = 'text';
-				} else {
-					password.type = 'password';
 				}
 			});	
 		</script>
