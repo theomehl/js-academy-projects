@@ -4,59 +4,88 @@
 <head>
 	<meta charset="utf-8">
 	<title>Password Visibility</title>
+	<link rel="stylesheet" href="//demos.tedmehl.me/base.css">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 	<style type="text/css">
 		body {
 			margin: 0 auto;
-			max-width: 40em;
-			width: 88%;
+			max-width: 600px;
+			padding: 2rem;
+			background-color: var(--gray-900);
+			color: var(--gray-100);
+			display: flex;
+			justify-content: center;
+		}
+		h1 {
+			margin: 0;
+		}
+		.wrapper {
+			background-color: var(--gray-700);
+			padding: 1.5rem;
+			border-radius: 2px;
 		}
 
 		label {
 			display: block;
 			width: 100%;
+			padding-bottom: 0.25rem;
 		}
 
 		input {
 			margin-bottom: 1em;
+		}
+		input:not([type="checkbox"]) {
+			display: block;
+			width: 100%;
+			padding: 0.5rem;
+			border: 1px solid var(--gray-500);
+			border-radius: 2px;
 		}
 
 		[type="checkbox"] {
 			margin-bottom: 0;
 			margin-right: 0.25em;
 		}
+		form button {
+            color: var(--gray-100);
+			background-color: var(--primary-800);
+			padding: 0.75rem 1.5rem;
+			border: none;
+			border-radius: 2px;
+		}
 	</style>
 </head>
 
 <body>
 
-	<h1>Password Visibility</h1>
+	<div class="wrapper">
+		<h1>Password Visibility</h1>
+		<p>Enter your username and password to login.</p>
 
-	<p>Enter your username and password to login.</p>
+		<form>
+			<div>
+				<label for="username">Username</label>
+				<input type="text" name="username" id="username">
+			</div>
 
-	<form>
-		<div>
-			<label for="username">Username</label>
-			<input type="text" name="username" id="username">
-		</div>
+			<div>
+				<label for="password">Password</label>
+				<input type="password" name="password" id="password">
+			</div>
 
-		<div>
-			<label for="password">Password</label>
-			<input type="password" name="password" id="password">
-		</div>
+			<div>
+				<label for="show-password">
+					<input type="checkbox" name="show-passwords" id="show-password">
+					Show password
+				</label>
+			</div>
 
-		<div>
-			<label for="show-password">
-				<input type="checkbox" name="show-passwords" id="show-password">
-				Show password
-			</label>
-		</div>
-
-		<p>
-			<button type="submit">Log In</button>
-		</p>
-	</form>
+			<p>
+				<button type="submit">Log In</button>
+			</p>
+		</form>
+	</div>
 
 
 	<script>
