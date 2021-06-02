@@ -1,4 +1,3 @@
-# Vanilla JS Academy Projects
-Projects from the June 2021 Vanilla JS Academy. This is my scrapbook. Each entry is another draft in my lifelong journey of learning. 
+Projects from the June 2021 Vanilla JS Academy. My scrapbook of drafts.
 
-###[Show password field](/project-1)
+1. [Show password field](/project-1)
