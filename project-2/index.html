@@ -4,59 +4,86 @@
 <head>
     <meta charset="utf-8">
     <title>Password Visibility - Multiple Fields</title>
+    <link rel="stylesheet" href="//demos.tedmehl.me/base.css">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <style type="text/css">
         body {
-            margin: 0 auto;
-            max-width: 40em;
-            width: 88%;
-        }
+			margin: 0 auto;
+			max-width: 600px;
+			padding: 2rem;
+			background-color: var(--gray-900);
+			color: var(--gray-100);
+			display: flex;
+			justify-content: center;
+		}
+		h1 {
+			margin: 0;
+		}
+		.wrapper {
+			background-color: var(--gray-700);
+			padding: 1.5rem;
+			border-radius: 2px;
+            max-width: 400px;
+		}
 
-        label {
-            display: block;
-            width: 100%;
-        }
+		label {
+			display: block;
+			width: 100%;
+			padding-bottom: 0.25rem;
+		}
 
-        input {
-            margin-bottom: 1em;
-        }
+		input {
+			margin-bottom: 1em;
+		}
+		input:not([type="checkbox"]) {
+			display: block;
+			width: 100%;
+			padding: 0.5rem;
+			border: 1px solid var(--gray-500);
+			border-radius: 2px;
+		}
 
-        [type="checkbox"] {
-            margin-bottom: 0;
-            margin-right: 0.25em;
-        }
+		[type="checkbox"] {
+			margin-bottom: 0;
+			margin-right: 0.25em;
+		}
+		form button {
+            color: var(--gray-100);
+			background-color: var(--primary-800);
+			padding: 0.75rem 1.5rem;
+			border: none;
+			border-radius: 2px;
+            text-transform: uppercase;
+		}
     </style>
 </head>
 
 <body>
 
-    <h1>Password Visibility - Multiple Fields</h1>
-
-    <p>Enter your current password and new password below.</p>
-
-    <form>
-        <div>
-            <label for="current-password">Current Password</label>
-            <input type="password" name="current-password" id="current-password">
-        </div>
-
-        <div>
-            <label for="new-password">New Password</label>
-            <input type="password" name="new-password" id="new-password">
-        </div>
-
-        <div>
-            <label for="show-passwords">
-                <input type="checkbox" name="show-passwords" id="show-passwords">
-                Show passwords
-            </label>
-        </div>
-
-        <p>
-            <button type="submit">Change Passwords</button>
-        </p>
-    </form>
+    <div class="wrapper">
+        <h1>Password Visibility - Multiple Fields</h1>
+        <p>Enter your current password and new password below.</p>
+        <form>
+            <div>
+                <label for="current-password">Current Password</label>
+                <input type="password" name="current-password" id="current-password">
+            </div>
+            <div>
+                <label for="new-password">New Password</label>
+                <input type="password" name="new-password" id="new-password">
+            </div>
+            <div>
+                <label for="show-passwords">
+                    <input type="checkbox" name="show-passwords" id="show-passwords">
+                    Show passwords
+                </label>
+            </div>
+            <p>
+                <button type="submit">Change Passwords</button>
+            </p>
+        </form>
+    </div>
 
     <script>
         let showPasswords = document.querySelector('#show-passwords');
