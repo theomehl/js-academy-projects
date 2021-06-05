@@ -1,4 +1,5 @@
 Projects from the June 2021 Vanilla JS Academy. My scrapbook of drafts.
 
-1. [Show password field](/project-1)
-2. [Show multiple password fields](/project-2)
+1. [Toggle password visibility on one field](/project-1)
+2. [Toggle password visibility on multiple fields](/project-2)
+3. [Toggle password visibility separate forms](/project-3)
