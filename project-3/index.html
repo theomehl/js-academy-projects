@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>Password Visibility - Multiple Forms</title>
+    <link rel="stylesheet" href="//demos.tedmehl.me/base.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <style type="text/css">
+        body {
+            margin: 0 auto;
+            max-width: 600px;
+            padding: 2rem;
+            background-color: var(--gray-900);
+            color: var(--gray-100);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        h1, h2 {
+            margin-top: 0;
+        }
+
+        .wrapper {
+            background-color: var(--gray-700);
+            padding: 1.5rem;
+            border-radius: 2px;
+            width: 400px;
+            margin-bottom: 2rem;
+        }
+
+        label {
+            display: block;
+            width: 100%;
+            padding-bottom: 0.25rem;
+        }
+
+        input {
+            margin-bottom: 1em;
+        }
+
+        input:not([type="checkbox"]) {
+            display: block;
+            width: 100%;
+            padding: 0.5rem;
+            border: 1px solid var(--gray-500);
+            border-radius: 2px;
+        }
+
+        [type="checkbox"] {
+            margin-bottom: 0;
+            margin-right: 0.25em;
+        }
+
+        form button {
+            color: var(--gray-100);
+            background-color: var(--primary-800);
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 2px;
+            text-transform: uppercase;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1>Password Visibility - Multiple Forms</h1>
+    <div class="wrapper">
+        <h2>Change Username</h2>
+        <p>Enter your username and password to change your username.</p>
+        <form>
+            <div>
+                <label for="username">Username</label>
+                <input type="text" name="username" id="username">
+            </div>
+            <div>
+                <label for="password">Password</label>
+                <input type="password" name="password" id="password" data-input-type="password">
+            </div>
+            <div>
+                <label for="show-password">
+                    <input type="checkbox" name="show-password" id="show-password">
+                    Show password
+                </label>
+            </div>
+            <p>
+                <button type="submit">Change Username</button>
+            </p>
+        </form>
+    </div>
+
+    <div class="wrapper">
+        <h2>Change Password</h2>
+        <p>Enter your current password and new password below.</p>
+        <form>
+            <div>
+                <label for="current-password">Current Password</label>
+                <input type="password" name="current-password" id="current-password" data-input-type="password">
+            </div>
+            <div>
+                <label for="new-password">New Password</label>
+                <input type="password" name="new-password" id="new-password" data-input-type="password">
+            </div>
+            <div>
+                <label for="show-passwords">
+                    <input type="checkbox" name="show-passwords" id="show-passwords">
+                    Show passwords
+                </label>
+            </div>
+            <p>
+                <button type="submit">Change Passwords</button>
+            </p>
+        </form>
+    </div>
+
+    <script>
+        document.addEventListener("click", function (event) {
+
+            /* Only run if the target was one of our intended checkboxes. This is very prescriptive to the
+               the ids of the forms. If more forms get added that have password toggles, this will break. */
+            if (!event.target.matches("#show-password") && !event.target.matches("#show-passwords")) return;
+
+            //Grab only the password inputs that are associated with our particular form
+            let passwords = event.target.form.querySelectorAll('[data-input-type="password"]');
+
+            //Loop through password inputs and set type based on the checked state of our toggle
+            for (let password of passwords) {
+                password.type = event.target.checked ? 'text' : 'password';
+            }
+        });
+    </script>
+</body>
+
+</html>
