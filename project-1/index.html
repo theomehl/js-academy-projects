@@ -15,16 +15,25 @@
 			background-color: var(--gray-900);
 			color: var(--gray-100);
 			display: flex;
-			justify-content: center;
+			flex-direction: column;
+			align-items: center;
 		}
+
+		h1,
+		h2 {
+			margin-top: 0;
+		}
+
 		h1 {
-			margin: 0;
+			align-self: flex-start;
 		}
+
 		.wrapper {
 			background-color: var(--gray-700);
 			padding: 1.5rem;
 			border-radius: 2px;
-			max-width: 400px;
+			width: 100%;
+			margin-bottom: 2rem;
 		}
 
 		label {
@@ -36,6 +45,7 @@
 		input {
 			margin-bottom: 1em;
 		}
+
 		input:not([type="checkbox"]) {
 			display: block;
 			width: 100%;
@@ -48,8 +58,9 @@
 			margin-bottom: 0;
 			margin-right: 0.25em;
 		}
+
 		form button {
-            color: var(--gray-100);
+			color: var(--gray-100);
 			background-color: var(--primary-800);
 			padding: 0.75rem 1.5rem;
 			border: none;
@@ -60,9 +71,9 @@
 </head>
 
 <body>
-
+	<h1>Password Visibility</h1>
 	<div class="wrapper">
-		<h1>Password Visibility</h1>
+		<h2>Log in</h2>
 		<p>Enter your username and password to login.</p>
 
 		<form>
