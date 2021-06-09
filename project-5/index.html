@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Word Count</title>
+    <meta name="description"
+        content="A counter that tells you how many words and characters you've written in the text area.">
+    <link rel="stylesheet" href="https://demos.tedmehl.me/base.css">
+    <style>
+        body {
+            margin: 0 auto;
+            max-width: 600px;
+            padding: 2rem;
+            background-color: var(--gray-900);
+            color: var(--gray-100);
+        }
+
+        h1 {
+            margin-top: 0;
+        }
+
+        a {
+            color: var(--primary-400);
+        }
+
+        label {
+            display: block;
+            width: 100%;
+            margin-bottom: 0.5rem;
+        }
+
+        textarea {
+            min-height: 24em;
+            width: 100%;
+            padding: 0.5rem;
+            border-color: var(--gray-700);
+            border-radius: 2px;
+            font-family: var(--sans-serif);
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Word Count</h1>
+
+    <label for="text">Enter your text below.</label>
+    <textarea id="text"></textarea>
+
+    <p>You've written <strong><span id="word-count">0</span> words</strong> and <strong><span
+                id="character-count">0</span> characters</strong>.</p>
+
+    <p><a href="/">&larr; Back to project list</a></p>
+
+
+    <script>
+        let text = document.querySelector("#text");
+        let characterCounter = document.querySelector("#character-count");
+        let wordCounter = document.querySelector("#word-count");
+
+        text.addEventListener("input", function () {
+            characterCounter.textContent = text.value.length;
+            wordArray = text.value.split(/\s+/).filter(function (word) {
+                return word.length > 0;
+            });
+            wordCounter.textContent = wordArray.length;
+        });
+
+    </script>
+</body>
+
+</html>
