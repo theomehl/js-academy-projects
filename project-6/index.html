@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Word Count</title>
+    <meta name="description"
+        content="A counter that tells you how many words and characters you've written in the text area.">
+    <link rel="stylesheet" href="https://demos.tedmehl.me/base.css">
+    <style>
+        body {
+            margin: 0 auto;
+            max-width: 600px;
+            padding: 2rem;
+            background-color: var(--gray-900);
+            color: var(--gray-100);
+        }
+
+        h1 {
+            margin-top: 0;
+        }
+
+        a {
+            color: var(--primary-400);
+        }
+
+        code {
+            font-size: 0.9rem;
+            background-color: var(--gray-400);
+            color: var(--gray-900);
+            padding: 0.15rem 0.35rem;
+            border-radius: 2px;
+        }
+
+        label {
+            display: block;
+            width: 100%;
+            margin-bottom: 0.5rem;
+        }
+
+        textarea {
+            min-height: 24em;
+            width: 100%;
+            padding: 0.5rem;
+            border-color: var(--gray-700);
+            border-radius: 2px;
+            font-family: var(--sans-serif);
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Word Count</h1>
+    <p>When using a screen reader utility like <em>VoiceOver</em> on MacOS or <em>Narrator</em> on Windows,
+        the screen reader will politely announce how many words and characters you have written as you type.</p>
+    <p>Try it yourself. Turn on VoiceOver using <code>cmd+F5</code> or Narrator using <code>win+ctrl+enter</code>
+        to see how a person using a screen reader would experience this page.</p>
+    <label for="text">Enter your text below.</label>
+    <textarea id="text"></textarea>
+    <!-- We can't use the same html structure from the last project here for announcing our word and character totals. 
+        If we do, this causes issues with a variety of screen reader utilities announcing items out of order or simply 
+        omitting words and values entirely.
+    -->
+    <p aria-live="polite" aria-atomic="true" id="count">You've written 0 words and 0 characters.</p>
+
+    <p><a href="/">&larr; Back to project list</a></p>
+
+
+    <script>
+        let text = document.querySelector("#text");
+        let count = document.querySelector("#count");
+
+        text.addEventListener("input", function () {
+            wordArray = text.value.split(/\s+/).filter(function (word) {
+                return word.length > 0;
+            });
+            count.textContent = `You've written ${wordArray.length} words and ${text.value.length} characters.`;
+        });
+
+    </script>
+</body>
+
+</html>
