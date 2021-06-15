@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="//demos.tedmehl.me/favicon.ico" type="image/x-icon">
+    <title>Document</title>
+    <style>
+        body {
+            margin: 0 auto;
+            max-width: 40em;
+            width: 88%;
+        }
+    </style>
+</head>
+
+<body>
+    <blockquote></blockquote>
+
+    <p>
+        <button id="get-quote">More Ron</button>
+    </p>
+    <script>
+        let button = document.querySelector('#get-quote');
+        let blockquote = document.querySelector('blockquote');
+        let getRon = function () {
+            fetch('https://ron-swanson-quotes.herokuapp.com/v2/quotes').then(function (response) {
+                if (response.ok) {
+                    return response.json();
+                }
+                return response.text.then(function (json) {
+                    throw json;
+                })
+            }).then(function (data) {
+                blockquote.innerText = data;
+            }).catch(function (error) {
+                console.warn(error);
+            })
+        }
+        button.addEventListener('click', getRon);
+        getRon();
+
+
+    </script>
+</body>
+
+</html>
