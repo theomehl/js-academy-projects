@@ -30,9 +30,13 @@
         }
 
         .quote-wrapper {
-            grid-row-start: 4;
             align-self: end;
-            padding: 2rem;
+            padding: 0 2rem;
+        }
+
+        h1 {
+            padding: 0 2rem;
+            font-weight: 300;
         }
 
         a {
@@ -78,13 +82,18 @@
 
             .quote-wrapper {
                 grid-column: 2/5;
+                grid-row-start: 4;
+            }
+
+            h1 {
+                grid-column: span 4;
             }
         }
     </style>
 </head>
 
 <body>
-
+    <h1>Random Ron</h1>
     <div class="quote-wrapper">
         <blockquote cite="https://ron-swanson-quotes.herokuapp.com/v2/quotes">
             <p data-quote-target aria-live="polite">Fetching a Ron quote...</p>
