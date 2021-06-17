@@ -112,6 +112,7 @@
     <script>
         let button = document.querySelector("#get-quote");
         let blockquote = document.querySelector("[data-quote-target]");
+        let quoteArray = [];
         function getRon() {
             fetch("https://ron-swanson-quotes.herokuapp.com/v2/quotes")
                 .then(function (response) {
@@ -121,7 +122,20 @@
                     return response.status;
                 })
                 .then(function (data) {
-                    blockquote.textContent = data[0];
+                    if(!quoteArray.includes(data[0])) {
+                        if (quoteArray.length >= 50) {
+                            quoteArray.shift();
+                        }
+                        quoteArray.push(data[0]);
+                        console.log(quoteArray);
+                        return data[0];
+                    }
+                    else {
+                        getRon();
+                    }
+                })
+                .then(function(quote) {
+                    blockquote.textContent = quote;
                 })
                 .catch(function (error) {
                     console.warn(error);
