@@ -7,3 +7,4 @@ Projects from the June 2021 Vanilla JS Academy. My scrapbook of drafts.
 5. [Word counter](/project-5)
 6. [Announcing the word count](/project-6)
 7. [Random Ron quote generator](/project-7)
+8. [Random Ron quote generator without duplicates](/project-8)
