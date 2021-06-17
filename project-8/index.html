@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Random Ron</title>
+    <meta name="description" content="Random Ron Swanson quote getter.">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,300;0,400;1,300&display=swap">
+    <link rel="stylesheet" href="https://demos.tedmehl.me/base.css" media="all">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            display: grid;
+            grid-gap: 1rem;
+            height: 100vh;
+            font-family: var(--serif);
+            font-style: italic;
+            font-size: 1.25rem;
+            font-weight: 300;
+            grid-template-rows: repeat(6, 1fr);
+            color: var(--gray-900);
+            background-color: var(--gray-100);
+
+        }
+
+        .quote-wrapper {
+            align-self: end;
+            padding: 0 2rem;
+        }
+
+        h1 {
+            font-weight: 300;
+        }
+
+        a {
+            font-size: 1rem;
+            color: var(--primary-600);
+            transition: color 0.2s ease-out;
+        }
+
+        a:hover {
+            color: var(--primary-900);
+        }
+
+        blockquote {
+            display: inline-block;
+            margin: 0;
+            padding: 1rem;
+            border-left: 5px solid var(--gray-400);
+            border-radius: 2px;
+            background-color: var(--gray-200);
+        }
+        
+        blockquote p {
+            margin-top: 0;
+        }
+
+        blockquote p::before {
+            content: open-quote;
+        }
+
+        blockquote p::after {
+            content: close-quote;
+        }
+
+        button {
+            background-color: var(--gray-200);
+            border: 2px solid var(--gray-300);
+            cursor: pointer;
+            border-radius: 2px;
+            font-family: var(--serif);
+            padding: 0.5rem 1.5rem;
+            transition: all 0.3s ease-out;
+        }
+
+        button:hover {
+            background-color: var(--gray-300);
+        }
+
+        @media all and (min-width: 800px) {
+            body {
+                grid-template-columns: repeat(6, 1fr);
+            }
+
+            .quote-wrapper {
+                grid-column: 2/5;
+                grid-row-start: 4;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="quote-wrapper">
+        <h1>Random Ron</h1>
+        <blockquote cite="https://ron-swanson-quotes.herokuapp.com/v2/quotes">
+            <p data-quote-target aria-live="polite">Fetching a Ron quote...</p>
+            <figcaption>- Ron Swanson</figcaption>
+        </blockquote>
+
+        <p>
+            <button id="get-quote">More Ron</button>
+        </p>
+        <p><a href="/">&larr; Back to project list</a></p>
+    </div>
+    <script>
+        let button = document.querySelector("#get-quote");
+        let blockquote = document.querySelector("[data-quote-target]");
+        function getRon() {
+            fetch("https://ron-swanson-quotes.herokuapp.com/v2/quotes")
+                .then(function (response) {
+                    if (response.ok) {
+                        return response.json();
+                    }
+                    return response.status;
+                })
+                .then(function (data) {
+                    blockquote.textContent = data[0];
+                })
+                .catch(function (error) {
+                    console.warn(error);
+                    blockquote.textContent = "Sorry, the attmept to get a Ron quote was half-assed, not whole-assed."
+                });
+        };
+        getRon();
+        button.addEventListener("click", getRon);
+
+
+
+
+    </script>
+</body>
+
+</html>
