@@ -127,14 +127,11 @@
                             quoteArray.shift();
                         }
                         quoteArray.push(data[0]);
-                        return data[0];
+                        blockquote.textContent = data[0];
                     }
                     else {
                         getRon();
                     }
-                })
-                .then(function(quote) {
-                    blockquote.textContent = quote;
                 })
                 .catch(function (error) {
                     console.warn(error);
