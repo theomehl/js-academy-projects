@@ -6,7 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Random Ron</title>
-    <meta name="description" content="Random Ron Swanson quote getter, but don't display a duplicate quote for at least 50 quote iterations.">
+    <meta name="description" content="Random Ron Swanson quote getter using an async function, but don't display a duplicate quote for at least 50 quote iterations.">
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link rel="stylesheet"
         href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,300;0,400;1,300&display=swap">
@@ -113,30 +113,27 @@
         let button = document.querySelector("#get-quote");
         let blockquote = document.querySelector("[data-quote-target]");
         let quoteArray = [];
-        function getRon() {
-            fetch("https://ron-swanson-quotes.herokuapp.com/v2/quotes")
-                .then(function (response) {
-                    if (response.ok) {
-                        return response.json();
-                    }
+        async function getRon() {
+            try {
+                let response = await fetch("https://ron-swanson-quotes.herokuapp.com/v2/quotes");
+                if (!response.ok) {
                     throw response.status;
-                })
-                .then(function (data) {
-                    if(!quoteArray.includes(data[0])) {
-                        if (quoteArray.length >= 50) {
-                            quoteArray.shift();
-                        }
-                        quoteArray.push(data[0]);
-                        blockquote.textContent = data[0];
+                }
+                let data = await response.json();
+                if(!quoteArray.includes(data[0])) {
+                    if (quoteArray.length >= 50) {
+                        quoteArray.shift();
                     }
-                    else {
-                        getRon();
-                    }
-                })
-                .catch(function (error) {
-                    console.warn(error);
-                    blockquote.textContent = "Sorry, the attmept to get a Ron quote was half-assed, not whole-assed."
-                });
+                    quoteArray.push(data[0]);
+                    blockquote.textContent = data[0];
+                }
+                else {
+                    getRon();
+                }
+            } catch (error) {
+                console.warn(error);
+                blockquote.textContent = "Sorry, the attmept to get a Ron quote was half-assed, not whole-assed.";
+            }
         };
         getRon();
         button.addEventListener("click", getRon);
