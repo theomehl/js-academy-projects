@@ -36,6 +36,9 @@
                 //Get the list of articles from the data
                 let articles = data['articles'];
                 
+                //Check for no articles to display.
+                if (articles.length == 0) return app.innerHTML = '<p>There are no articles. Check back later.</p>';
+
                 //Use Array.map() to get the parts of the article data we want and wrap them in HTML for structure. Then join the marked up articles together and return.  
                 app.innerHTML = articles.map(function (article) {
                     return `<article>
