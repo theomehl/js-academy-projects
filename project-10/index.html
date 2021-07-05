@@ -13,43 +13,91 @@
             max-width: 40em;
             width: 88%;
         }
+
+        .loading::after {
+            display: inline-block;
+            animation: ellipsis steps(1, end) 1.5s infinite;
+            content: "";
+        }
+
+        @keyframes ellipsis {
+            0% {
+                content: "";
+            }
+
+            25% {
+                content: ".";
+            }
+
+            50% {
+                content: "..";
+            }
+
+            75% {
+                content: "...";
+            }
+
+            100% {
+                content: "";
+            }
+        }
     </style>
 </head>
 
 <body>
     <h1>Dragon Trainer Monthly</h1>
     <div id="app">
-
+        <p class="loading">Fetching the latest dragon news</p>
     </div>
     <script>
+        // Get the app element wrapper
         let app = document.querySelector("#app");
+
+        // Show an error message if fetch fails or there are no articles 
+        function renderError() {
+            app.innerHTML = '<p>Sorry. We were unable to fetch any articles.</p>';
+        }
+
+        // Passing in the articles we got from our fetch, format the data 
+        // and display it in our #app section.
+        function displayArticles(articles) {
+
+            // Use Array.map() to get the parts of the article data we want and wrap 
+            // them in HTML for structure. Then join the marked up articles together 
+            // and return the combined string.
+            app.innerHTML = articles.map(function (article) {
+                return `
+                        <article>
+                            <h2><a href="${article.url}">${article.title}</a></h2>
+                            <p>by ${article.author} on <time>${article.pubdate}</time></p>
+                            <p>${article.article}</p>
+                        </article>`;
+            }).join('');
+        }
+
         async function getArticles() {
             try {
                 let response = await fetch('https://vanillajsacademy.com/api/dragons.json');
 
-                //If the URL is wrong, we don't get back any error, so we don't actually catch anything. I don't know why.
                 if (!response.ok) throw response.status;
 
-                //Grab the data from our fetch
+                // Grab the data from our fetch
                 let data = await response.json();
 
-                //Get the list of articles from the data
-                let articles = data['articles'];
-                
-                //Check for no articles to display.
-                if (articles.length == 0) return app.innerHTML = '<p>There are no articles. Check back later.</p>';
+                // Get the list of articles from the data
+                let articles = data.articles;
 
-                //Use Array.map() to get the parts of the article data we want and wrap them in HTML for structure. Then join the marked up articles together and return.  
-                app.innerHTML = articles.map(function (article) {
-                    return `<article>
-                        <h2><a href="${article['url']}">${article['title']}</a></h2>
-                        <p>by ${article['author']} on <time>${article['pubdate']}</time></p>
-                        <p>${article['article']}</p>
-                        </article>`;
-                }).join('');
+                // Check for no articles to display.
+                if (!articles || articles.length < 1) {
+                    renderError();
+                    return
+                };
+                // We have articles, so display them.
+                displayArticles(articles);
 
             } catch (error) {
-                app.innerHTML = '<p>Sorry. We were unable to fetch any articles.</p>';
+                console.warn(error);
+                renderError();
             }
         }
         getArticles();
