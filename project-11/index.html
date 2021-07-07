@@ -79,9 +79,9 @@
                 });
 
                 // Only display author bio if we have it
-                let footer = '';
+                let bio = '';
                 if (author) {
-                    footer = `
+                    bio = `
                         <footer>
                             <p><small><em>about ${article.author}:</em><br>
                                 ${author.bio}</small>
@@ -94,7 +94,7 @@
                             <h2><a href="${article.url}">${article.title}</a></h2>
                             <p>by ${article.author} on <time>${article.pubdate}</time></p>
                             <p>${article.article}</p>
-                            ${footer}
+                            ${bio}
                         </article>`;
             }).join('');
         }
