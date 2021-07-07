@@ -41,6 +41,10 @@
                 content: "";
             }
         }
+
+        article {
+            border-bottom: 2px solid lightgray;
+        }
     </style>
 </head>
 
@@ -64,6 +68,23 @@
             app.innerHTML = '<p>Sorry. We were unable to fetch any articles.</p>';
         }
 
+        // Match article author info with correct author to display bio
+        function matchAuthor(authors, articleAuthor) {
+            let author = authors.find(function (author) {
+                    return author.author === articleAuthor;
+                });
+
+            // Only display author bio if we have it
+            if (author && author.bio) {
+                return `
+                    <footer>
+                        <p><small><em>about ${author.author}:</em><br>
+                            ${author.bio}</small>
+                        </p>
+                    </footer>`;
+            } return '';
+        }
+
         // Passing in the articles and authors we got from our fetch,  
         // format the data and display it in our #app section.
         function displayArticles(articles, authors) {
@@ -73,28 +94,12 @@
             // and return the combined string.
             app.innerHTML = articles.map(function (article) {
 
-                // Grab the correct author info based on article author info
-                let author = authors.find(function (author) {
-                    return author.author === article.author;
-                });
-
-                // Only display author bio if we have it
-                let bio = '';
-                if (author) {
-                    bio = `
-                        <footer>
-                            <p><small><em>about ${article.author}:</em><br>
-                                ${author.bio}</small>
-                            </p>
-                        </footer>`;
-                }
-
                 return `
                         <article>
                             <h2><a href="${article.url}">${article.title}</a></h2>
                             <p>by ${article.author} on <time>${article.pubdate}</time></p>
                             <p>${article.article}</p>
-                            ${bio}
+                             ${matchAuthor(authors, article.author)}
                         </article>`;
             }).join('');
         }
