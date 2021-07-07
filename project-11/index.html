@@ -53,6 +53,12 @@
         // Get the app element wrapper
         let app = document.querySelector("#app");
 
+        // List our fetch calls in an array to use with Promise.all
+        let fetchEndpoints = [
+            fetch('https://vanillajsacademy.com/api/dragons.json'), 
+            fetch('https://vanillajsacademy.com/api/dragons-authors.json')
+        ];
+
         // Show an error message if fetch fails or there are no articles 
         function renderError() {
             app.innerHTML = '<p>Sorry. We were unable to fetch any articles.</p>';
@@ -60,7 +66,7 @@
 
         // Passing in the articles we got from our fetch, format the data 
         // and display it in our #app section.
-        function displayArticles(articles) {
+        function displayArticles(articles, authors) {
 
             // Use Array.map() to get the parts of the article data we want and wrap 
             // them in HTML for structure. Then join the marked up articles together 
@@ -77,15 +83,27 @@
 
         async function getArticles() {
             try {
-                let response = await fetch('https://vanillajsacademy.com/api/dragons.json');
+                let responses = await Promise.all(fetchEndpoints);
 
-                if (!response.ok) throw response.status;
+                // Did we get responses? 
+                console.log('Responses',responses);
+
+                //Check each response to see if the status is ok
+                for (response of responses) {
+                    if (!response.ok) throw response.status;
+                }
 
                 // Grab the data from our fetch
-                let data = await response.json();
+                let data = await Promise.all(responses.map(function(response){
+                    return response.json();
+                }));
+
+                // Did we get data? 
+                console.log('Data', data);
 
                 // Get the list of articles from the data
-                let articles = data.articles;
+                let articles = data[0].articles;
+                let authors = data[1].authors;
 
                 // Check for no articles to display.
                 if (!articles || articles.length < 1) {
@@ -93,7 +111,7 @@
                     return
                 };
                 // We have articles, so display them.
-                displayArticles(articles);
+                displayArticles(articles, authors);
 
             } catch (error) {
                 console.warn(error);
