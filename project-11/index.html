@@ -64,8 +64,8 @@
             app.innerHTML = '<p>Sorry. We were unable to fetch any articles.</p>';
         }
 
-        // Passing in the articles we got from our fetch, format the data 
-        // and display it in our #app section.
+        // Passing in the articles and authors we got from our fetch,  
+        // format the data and display it in our #app section.
         function displayArticles(articles, authors) {
 
             // Use Array.map() to get the parts of the article data we want and wrap 
@@ -78,16 +78,23 @@
                     return author.author === article.author;
                 });
 
+                // Only display author bio if we have it
+                let footer = '';
+                if (author) {
+                    footer = `
+                        <footer>
+                            <p><small><em>about ${article.author}:</em><br>
+                                ${author.bio}</small>
+                            </p>
+                        </footer>`;
+                }
+
                 return `
                         <article>
                             <h2><a href="${article.url}">${article.title}</a></h2>
                             <p>by ${article.author} on <time>${article.pubdate}</time></p>
                             <p>${article.article}</p>
-                            <footer>
-                                <p><small><em>about ${article.author}:</em><br>
-                                   ${author.bio}</small>
-                                </p>
-                            </footer>
+                            ${footer}
                         </article>`;
             }).join('');
         }
@@ -112,7 +119,7 @@
                 // Did we get data? 
                 console.log('Data', data);
 
-                // Get the list of articles from the data
+                // Get the list of articles and authors from the data
                 let articles = data[0].articles;
                 let authors = data[1].authors;
 
