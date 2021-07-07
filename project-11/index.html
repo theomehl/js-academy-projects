@@ -53,9 +53,9 @@
         // Get the app element wrapper
         let app = document.querySelector("#app");
 
-        // List our fetch calls in an array to use with Promise.all
+        // List our fetch calls in an array for use with Promise.all
         let fetchEndpoints = [
-            fetch('https://vanillajsacademy.com/api/dragons.json'), 
+            fetch('https://vanillajsacademy.com/api/dragons.json'),
             fetch('https://vanillajsacademy.com/api/dragons-authors.json')
         ];
 
@@ -72,11 +72,22 @@
             // them in HTML for structure. Then join the marked up articles together 
             // and return the combined string.
             app.innerHTML = articles.map(function (article) {
+
+                // Grab the correct author info based on article author info
+                let author = authors.find(function (author) {
+                    return author.author === article.author;
+                });
+
                 return `
                         <article>
                             <h2><a href="${article.url}">${article.title}</a></h2>
                             <p>by ${article.author} on <time>${article.pubdate}</time></p>
                             <p>${article.article}</p>
+                            <footer>
+                                <p><small><em>about ${article.author}:</em><br>
+                                   ${author.bio}</small>
+                                </p>
+                            </footer>
                         </article>`;
             }).join('');
         }
@@ -86,7 +97,7 @@
                 let responses = await Promise.all(fetchEndpoints);
 
                 // Did we get responses? 
-                console.log('Responses',responses);
+                console.log('Responses', responses);
 
                 //Check each response to see if the status is ok
                 for (response of responses) {
@@ -94,7 +105,7 @@
                 }
 
                 // Grab the data from our fetch
-                let data = await Promise.all(responses.map(function(response){
+                let data = await Promise.all(responses.map(function (response) {
                     return response.json();
                 }));
 
