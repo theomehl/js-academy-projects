@@ -33,7 +33,7 @@
 <body>
 
     <h1>Monsters!</h1>
-    <button id="shuffle">Shuffle the monsters!</button>
+    <button id="shuffle">Shuffle the</button>
 
     <div id="app" class="row"></div>
 
@@ -56,62 +56,62 @@
         let monsters = [
             {
                 'monster': 'monster1',
-                'url': 'https://gist.githubusercontent.com/cferdinandi/14e80a8e5383d962d4ac65386406993b/raw/9f34ac3b4676e4ce62d51fe7c9b06845e4657f10/monster1.svg',
+                'url': 'monster1.svg',
                 'alt': 'A yellow monster with a little tail, tuft of hair on top and a curly nose'
             },
             {
                 'monster': 'monster2',
-                'url': 'https://gist.githubusercontent.com/cferdinandi/14e80a8e5383d962d4ac65386406993b/raw/9f34ac3b4676e4ce62d51fe7c9b06845e4657f10/monster2.svg',
+                'url': 'monster2.svg',
                 'alt': 'A yellow monster with, one eye, jagged teeth, and skinny arms and legs.'
             },
             {
                 'monster': 'monster3',
-                'url': 'https://gist.githubusercontent.com/cferdinandi/14e80a8e5383d962d4ac65386406993b/raw/9f34ac3b4676e4ce62d51fe7c9b06845e4657f10/monster3.svg',
+                'url': 'monster3.svg',
                 'alt': 'A green monster with a body in a u shape with its mouth in the middle with sharp teeth. It has two eyes at the top of each end, bendy arms with three fingers, and two tiny stick legs.'
             },
             {
                 'monster': 'monster4',
-                'url': 'https://gist.githubusercontent.com/cferdinandi/14e80a8e5383d962d4ac65386406993b/raw/9f34ac3b4676e4ce62d51fe7c9b06845e4657f10/monster4.svg',
+                'url': 'monster4.svg',
                 'alt': 'A red monster with a flat expression. It has two downward-facing horns and four arms with three fingers on each hand.'
             },
             {
                 'monster': 'monster5',
-                'url': 'https://gist.githubusercontent.com/cferdinandi/14e80a8e5383d962d4ac65386406993b/raw/9f34ac3b4676e4ce62d51fe7c9b06845e4657f10/monster5.svg',
+                'url': 'monster5.svg',
                 'alt': 'A circular green monster with one eye. It has spikes on either side of its face, two legs, and two hooks for arms. He looks a little sad.'
             },
             {
                 'monster': 'monster6',
-                'url': 'https://gist.githubusercontent.com/cferdinandi/14e80a8e5383d962d4ac65386406993b/raw/9f34ac3b4676e4ce62d51fe7c9b06845e4657f10/monster6.svg',
+                'url': 'monster6.svg',
                 'alt': 'A triangular green monster who is either doing a headstand, or he is naturally an upside down triangle shape.'
             },
             {
                 'monster': 'monster7',
-                'url': 'https://gist.githubusercontent.com/cferdinandi/14e80a8e5383d962d4ac65386406993b/raw/9f34ac3b4676e4ce62d51fe7c9b06845e4657f10/monster7.svg',
+                'url': 'monster7.svg',
                 'alt': 'A purple monster with one large eye and a rounded head. It has two tentacles for arms and two stumpy legs.'
             },
             {
                 'monster': 'monster8',
-                'url': 'https://gist.githubusercontent.com/cferdinandi/14e80a8e5383d962d4ac65386406993b/raw/9f34ac3b4676e4ce62d51fe7c9b06845e4657f10/monster8.svg',
+                'url': 'monster8.svg',
                 'alt': 'An egg shaped purple monster. It has two little ears on top, one eye, and a flat mouth.'
             },
             {
                 'monster': 'monster9',
-                'url': 'https://gist.githubusercontent.com/cferdinandi/14e80a8e5383d962d4ac65386406993b/raw/9f34ac3b4676e4ce62d51fe7c9b06845e4657f10/monster9.svg',
+                'url': 'monster9.svg',
                 'alt': 'A blue monster with three vertical balls for a body. It has two wide-set eyes on either side of its face, three dots for a mouth, two raise arms, two feathers on either side, and thre stick legs.'
             },
             {
                 'monster': 'monster10',
-                'url': 'https://gist.githubusercontent.com/cferdinandi/14e80a8e5383d962d4ac65386406993b/raw/9f34ac3b4676e4ce62d51fe7c9b06845e4657f10/monster10.svg',
+                'url': 'monster10.svg',
                 'alt': 'Blue monster with two stick legs, sharp teeth, and two round eyes at the end of eyestalks'
             },
             {
                 'monster': 'monster11',
-                'url': 'https://gist.githubusercontent.com/cferdinandi/14e80a8e5383d962d4ac65386406993b/raw/9f34ac3b4676e4ce62d51fe7c9b06845e4657f10/monster11.svg',
+                'url': 'monster11.svg',
                 'alt': 'A tall, gray monster with a big, thin smile and fur. He has two thick arms and two stumpy legs.'
             },
             {
                 'monster': 'sock',
-                'url': 'https://gist.githubusercontent.com/cferdinandi/14e80a8e5383d962d4ac65386406993b/raw/9f34ac3b4676e4ce62d51fe7c9b06845e4657f10/sock.svg',
+                'url': 'sock.svg',
                 'alt': 'A pair of white tube socks.'
             }
         ];
@@ -154,12 +154,12 @@
             app.innerHTML = monsters.map(function(monster) {
                 return `
                         <div class="grid">
-                            <img src="${monster.url}" alt="${monster.alt}" />
+                            <img src="https://gist.githubusercontent.com/cferdinandi/14e80a8e5383d962d4ac65386406993b/raw/9f34ac3b4676e4ce62d51fe7c9b06845e4657f10/${monster.url}" alt="${monster.alt}" />
                         </div>`;
             }).join('');
         }
 
-        // Add an event listener to the button so we can shuffle our monsters with a click. 
+        // Add an eventn listener to the button so we can shuffle our monsters with a click. 
         button.addEventListener('click', function() {
             displayMonsters(Array.from(shuffle(monsters)));                
         });
