@@ -52,66 +52,54 @@
     </footer>
 
     <script>
-        // Store the monsters and socks with the url to their file and alt text for use later.
+        // Store the monsters and socks with their names and alt text for use later.
         let monsters = [
             {
-                'monster': 'monster1',
-                'url': 'monster1.svg',
+                'name': 'monster1',
                 'alt': 'A yellow monster with a little tail, tuft of hair on top and a curly nose'
             },
             {
-                'monster': 'monster2',
-                'url': 'monster2.svg',
+                'name': 'monster2',
                 'alt': 'A yellow monster with, one eye, jagged teeth, and skinny arms and legs.'
             },
             {
-                'monster': 'monster3',
-                'url': 'monster3.svg',
+                'name': 'monster3',
                 'alt': 'A green monster with a body in a u shape with its mouth in the middle with sharp teeth. It has two eyes at the top of each end, bendy arms with three fingers, and two tiny stick legs.'
             },
             {
-                'monster': 'monster4',
-                'url': 'monster4.svg',
+                'name': 'monster4',
                 'alt': 'A red monster with a flat expression. It has two downward-facing horns and four arms with three fingers on each hand.'
             },
             {
-                'monster': 'monster5',
-                'url': 'monster5.svg',
+                'name': 'monster5',
                 'alt': 'A circular green monster with one eye. It has spikes on either side of its face, two legs, and two hooks for arms. He looks a little sad.'
             },
             {
-                'monster': 'monster6',
-                'url': 'monster6.svg',
+                'name': 'monster6',
                 'alt': 'A triangular green monster who is either doing a headstand, or he is naturally an upside down triangle shape.'
             },
             {
-                'monster': 'monster7',
-                'url': 'monster7.svg',
+                'name': 'monster7',
                 'alt': 'A purple monster with one large eye and a rounded head. It has two tentacles for arms and two stumpy legs.'
             },
             {
-                'monster': 'monster8',
-                'url': 'monster8.svg',
+                'name': 'monster8',
                 'alt': 'An egg shaped purple monster. It has two little ears on top, one eye, and a flat mouth.'
             },
             {
-                'monster': 'monster9',
-                'url': 'monster9.svg',
+                'name': 'monster9',
                 'alt': 'A blue monster with three vertical balls for a body. It has two wide-set eyes on either side of its face, three dots for a mouth, two raise arms, two feathers on either side, and thre stick legs.'
             },
             {
-                'monster': 'monster10',
-                'url': 'monster10.svg',
+                'name': 'monster10',
                 'alt': 'Blue monster with two stick legs, sharp teeth, and two round eyes at the end of eyestalks'
             },
             {
-                'monster': 'monster11',
-                'url': 'monster11.svg',
+                'name': 'monster11',
                 'alt': 'A tall, gray monster with a big, thin smile and fur. He has two thick arms and two stumpy legs.'
             },
             {
-                'monster': 'sock',
-                'url': 'sock.svg',
+                'name': 'sock',
                 'alt': 'A pair of white tube socks.'
             }
         ];
@@ -149,12 +137,12 @@
 
         }
 
-        // Use the data from our monsters with template literals to add the correct HTML markup to our document. 
+        // Use the data from our monsters with template literals with HTML markup to add them to our document. 
         function displayMonsters(monsters) {
             app.innerHTML = monsters.map(function(monster) {
                 return `
                         <div class="grid">
-                            <img src="https://gist.githubusercontent.com/cferdinandi/14e80a8e5383d962d4ac65386406993b/raw/9f34ac3b4676e4ce62d51fe7c9b06845e4657f10/${monster.url}" alt="${monster.alt}" />
+                            <img src="https://gist.githubusercontent.com/cferdinandi/14e80a8e5383d962d4ac65386406993b/raw/9f34ac3b4676e4ce62d51fe7c9b06845e4657f10/${monster.name}.svg" alt="${monster.alt}" />
                         </div>`;
             }).join('');
         }
