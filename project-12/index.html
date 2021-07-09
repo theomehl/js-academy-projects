@@ -6,7 +6,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dragon Trainer Monthly - Sanitized 3rd Party Data</title>
-    <meta name="description" content=" Dragon Trainer Monthly magazine with a practice in data integrity by protecting against XSS attacks.">
+    <meta name="description"
+        content=" Dragon Trainer Monthly magazine with a practice in data integrity by protecting against XSS attacks.">
     <style type="text/css">
         body {
             margin: 0 auto;
@@ -63,6 +64,15 @@
             fetch('https://vanillajsacademy.com/api/dragons-authors.json')
         ];
 
+        // Sanitize and encode HTML from a string. As seen in Chris Ferdinandi's example 
+        // modified from PortSwigger
+        // https://portswigger.net/web-security/cross-site-scripting/preventing
+        function sanitizeHTML(str) {
+            return str.replace(/javascript:/gi, '').replace(/[^\w-_. ]/gi, function (c) {
+                return `&#${c.charCodeAt(0)};`;
+            });
+        }
+
         // Show an error message if fetch fails or there are no articles 
         function renderError() {
             app.innerHTML = '<p>Sorry. We were unable to fetch any articles.</p>';
@@ -71,15 +81,15 @@
         // Match article author info with correct author to display bio
         function matchAuthor(authors, articleAuthor) {
             let author = authors.find(function (author) {
-                    return author.author === articleAuthor;
-                });
+                return author.author === articleAuthor;
+            });
 
             // Only display author bio if we have it
             if (author && author.bio) {
                 return `
                     <footer>
-                        <p><small><em>about ${author.author}:</em><br>
-                            ${author.bio}</small>
+                        <p><small><em>about ${sanitizeHTML(author.author)}:</em><br>
+                            ${sanitizeHTML(author.bio)}</small>
                         </p>
                     </footer>`;
             } return '';
@@ -96,9 +106,9 @@
 
                 return `
                         <article>
-                            <h2><a href="${article.url}">${article.title}</a></h2>
-                            <p>by ${article.author} on <time>${article.pubdate}</time></p>
-                            <p>${article.article}</p>
+                            <h2><a href="${sanitizeHTML(article.url)}">${sanitizeHTML(article.title)}</a></h2>
+                            <p>by ${sanitizeHTML(article.author)} on <time>${sanitizeHTML(article.pubdate)}</time></p>
+                            <p>${sanitizeHTML(article.article)}</p>
                             ${matchAuthor(authors, article.author)}
                         </article>`;
             }).join('');
