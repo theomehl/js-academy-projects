@@ -33,7 +33,6 @@
 <body>
 
     <h1>Monsters!</h1>
-    <button id="shuffle">Shuffle the</button>
 
     <div id="app" class="row"></div>
 
@@ -107,9 +106,6 @@
         // Grab our app wrapper element. 
         let app = document.querySelector('#app');
 
-        // Grab our shuffle monster button. 
-        let button = document.querySelector('#shuffle');
-
         /**
          * Randomly shuffle an array
          * https://stackoverflow.com/a/2450976/1293256
@@ -146,11 +142,6 @@
                         </div>`;
             }).join('');
         }
-
-        // Add an eventn listener to the button so we can shuffle our monsters with a click. 
-        button.addEventListener('click', function() {
-            displayMonsters(Array.from(shuffle(monsters)));                
-        });
 
         // Display the monsters, but with a shuffled copy of our original array.
         displayMonsters(Array.from(shuffle(monsters)));
