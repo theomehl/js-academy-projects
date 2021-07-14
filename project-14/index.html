@@ -5,8 +5,8 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Monsters!</title>
-    <meta name="description" content="A randomly shuffled grid of monsters.">
+    <title>Monsters! Game</title>
+    <meta name="description" content="A game of finding the monsters and avoiding the socks.">
 
     <style>
         .row {
@@ -18,6 +18,13 @@
         .grid {
             min-height: 6em;
             padding: 1em;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        button {
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -36,7 +43,7 @@
 
 <body>
 
-    <h1>Monsters!</h1>
+    <h1>Monsters! Game</h1>
     <button id="reshuffle">Reshuffle</button>
     <div id="app" class="row"></div>
 
@@ -139,15 +146,15 @@
         function gameOver() {
             alert('Sorry. You found the sock and lost.');
         }
-        function revealMonster(button) {
+        function revealMonster(target) {
             // Get the monster name from the data attribute of the button
-            let monster = button.getAttribute('data-monster');
-            // Get the parent ahchor item of the button
-            let a = button.closest('a');
-            console.log(a);
+            let monster = target.getAttribute('data-monster');
+            // Get the closest button of the clicked element
+            let button = target.closest('button');
+            console.log(button);
             // Grab the monster data from our array by matching the data attribute 
             // with the monster array monster name
-            let monsterData = monsters.find(function(monsterItem) {
+            let monsterData = monsters.find(function (monsterItem) {
                 return monsterItem.name === monster;
             });
             // Create a new img element to replace the anchor
@@ -155,16 +162,17 @@
             image.src = `https://gist.githubusercontent.com/cferdinandi/14e80a8e5383d962d4ac65386406993b/raw/9f34ac3b4676e4ce62d51fe7c9b06845e4657f10/${monsterData.name}.svg`;
             image.alt = monsterData.alt;
             // Replace the anchor with the new image and a message with what you chose. 
-            a.replaceWith(image, monster == 'sock' ? 'I\'m sorry. You found the socks and lost.' : 'You found a monster!');
+            button.replaceWith(image, monster == 'sock' ? 'I\'m sorry. You found the socks and lost.' : 'You found a monster!');
             // Check if the monster item is a sock and display a game over message if we picked the sock
         }
 
         // Use the data from our monsters with template literals with HTML markup to add them to our document. 
         function displayMonsters(monsters) {
-            app.innerHTML = monsters.map(function(monster) {
+            app.innerHTML = monsters.map(function (monster) {
                 return `<div class="grid" aria-live"polite">
-                            <a href="#">
+                            <button data-monster="${monster.name}">
                                 <img src="https://gist.githubusercontent.com/cferdinandi/d40f6a589c60eeb7fa10de9cca212cec/raw/29eaac94f4201691cf31d76787c6f867838d63f0/door.svg" data-monster="${monster.name}" alt="A brown door" />
+                                Reveal monster
                             </a>
                         </div>`;
             }).join('');
@@ -173,18 +181,18 @@
         // Display the monsters, but with a shuffled copy of our original array.
         displayMonsters(Array.from(shuffle(monsters)));
 
-        document.addEventListener('click', function(event) {
+        document.addEventListener('click', function (event) {
             // Check if we clicked one of our reveal monster buttons and reveal the monster
             console.log(event.target);
             if (event.target.matches('[data-monster]')) {
                 revealMonster(event.target);
-            } 
+            }
             // Check if the reshuffle button was clicked and reshuffle the monsters
             else if (event.target.matches('#reshuffle')) {
                 displayMonsters(Array.from(shuffle(monsters)));
             }
 
-        })
+        });
 
     </script>
 </body>
