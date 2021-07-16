@@ -183,7 +183,7 @@
 					${monsters.map(function (monster, index) {
 						return `
 							<div class="grid" aria-live="polite">
-								<div data-monster="${index}"><img alt="Door ${index + 1}" src="door.svg"></div>
+								<button data-monster="${index}"><img alt="Door ${index + 1}" src="door.svg"></button>
 							</div>`;
 					}).join('')}
 				</div>`;
