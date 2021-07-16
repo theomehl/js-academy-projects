@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Monsters! Game</title>
+    <meta name="description" content="A game of finding the monsters and avoiding the socks.">
+
+    <style>
+        .row {
+            display: grid;
+            grid-template-columns: auto auto auto;
+            text-align: center;
+        }
+
+        .grid {
+            min-height: 6em;
+            padding: 1em;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        button {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        /**
+ * Make sure images scale
+ */
+        img {
+            height: auto;
+            max-width: 100%;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1>Monsters! Game</h1>
+    <button id="reshuffle">Reshuffle</button>
+    <div id="app" class="row"></div>
+
+    <footer>
+        <hr>
+        <p class="text-small text-muted">Icons by <a href="https://thenounproject.com/term/door/311732/">Jamie
+                Dickinson</a>, <a href="https://thenounproject.com/term/monster/184225/">Nicky Knicky</a>, <a
+                href="https://thenounproject.com/term/monster/1510400/">Alvaro Cabrera</a>, <a
+                href="https://thenounproject.com/term/monster/28460/">Eliricon</a>, <a
+                href="https://thenounproject.com/term/monster/82823/">April Yang</a>, <a
+                href="https://thenounproject.com/term/monster/1062009/">tk66</a>, <a
+                href="https://thenounproject.com/term/monster/24990/">Alex WaZa</a>, <a
+                href="https://thenounproject.com/term/monster/37212/">Husein Aziz</a>, <a
+                href="https://thenounproject.com/term/monster/2236082">iconcheese</a>, and <a
+                href="https://thenounproject.com/term/socks/38451/">Yazmin Alanis</a>.</p>
+    </footer>
+
+    <script>
+        // Store the monsters and socks with their names and alt text for use later.
+        let monsters = [
+            {
+                'name': 'monster1',
+                'alt': 'A yellow monster with a little tail, tuft of hair on top and a curly nose'
+            },
+            {
+                'name': 'monster2',
+                'alt': 'A yellow monster with, one eye, jagged teeth, and skinny arms and legs.'
+            },
+            {
+                'name': 'monster3',
+                'alt': 'A green monster with a body in a u shape with its mouth in the middle with sharp teeth. It has two eyes at the top of each end, bendy arms with three fingers, and two tiny stick legs.'
+            },
+            {
+                'name': 'monster4',
+                'alt': 'A red monster with a flat expression. It has two downward-facing horns and four arms with three fingers on each hand.'
+            },
+            {
+                'name': 'monster5',
+                'alt': 'A circular green monster with one eye. It has spikes on either side of its face, two legs, and two hooks for arms. He looks a little sad.'
+            },
+            {
+                'name': 'monster6',
+                'alt': 'A triangular green monster who is either doing a headstand, or he is naturally an upside down triangle shape.'
+            },
+            {
+                'name': 'monster7',
+                'alt': 'A purple monster with one large eye and a rounded head. It has two tentacles for arms and two stumpy legs.'
+            },
+            {
+                'name': 'monster8',
+                'alt': 'An egg shaped purple monster. It has two little ears on top, one eye, and a flat mouth.'
+            },
+            {
+                'name': 'monster9',
+                'alt': 'A blue monster with three vertical balls for a body. It has two wide-set eyes on either side of its face, three dots for a mouth, two raise arms, two feathers on either side, and thre stick legs.'
+            },
+            {
+                'name': 'monster10',
+                'alt': 'Blue monster with two stick legs, sharp teeth, and two round eyes at the end of eyestalks'
+            },
+            {
+                'name': 'monster11',
+                'alt': 'A tall, gray monster with a big, thin smile and fur. He has two thick arms and two stumpy legs.'
+            },
+            {
+                'name': 'sock',
+                'alt': 'A pair of white tube socks.'
+            }
+        ];
+
+        // Grab our app wrapper element. 
+        let app = document.querySelector('#app');
+
+        /**
+         * Randomly shuffle an array
+         * https://stackoverflow.com/a/2450976/1293256
+         * @param  {Array} array The array to shuffle
+         * @return {String}      The first item in the shuffled array
+         */
+        function shuffle(array) {
+
+            let currentIndex = array.length;
+            let temporaryValue, randomIndex;
+
+            // While there remain elements to shuffle...
+            while (0 !== currentIndex) {
+                // Pick a remaining element...
+                randomIndex = Math.floor(Math.random() * currentIndex);
+                currentIndex -= 1;
+
+                // And swap it with the current element.
+                temporaryValue = array[currentIndex];
+                array[currentIndex] = array[randomIndex];
+                array[randomIndex] = temporaryValue;
+            }
+
+            return array;
+
+        }
+        function gameOver() {
+            alert('Sorry. You found the sock and lost.');
+        }
+        function revealMonster(target) {
+            // Get the monster name from the data attribute of the button
+            let monster = target.getAttribute('data-monster');
+            // Get the closest button of the clicked element
+            let button = target.closest('button');
+            console.log(button);
+            // Grab the monster data from our array by matching the data attribute 
+            // with the monster array monster name
+            let monsterData = monsters.find(function (monsterItem) {
+                return monsterItem.name === monster;
+            });
+            // Create a new img element to replace the anchor
+            let image = document.createElement('img');
+            image.src = `https://gist.githubusercontent.com/cferdinandi/14e80a8e5383d962d4ac65386406993b/raw/9f34ac3b4676e4ce62d51fe7c9b06845e4657f10/${monsterData.name}.svg`;
+            image.alt = monsterData.alt;
+            // Replace the anchor with the new image and a message with what you chose. 
+            button.replaceWith(image, monster == 'sock' ? 'I\'m sorry. You found the socks and lost.' : 'You found a monster!');
+            // Check if the monster item is a sock and display a game over message if we picked the sock
+        }
+
+        // Use the data from our monsters with template literals with HTML markup to add them to our document. 
+        function displayMonsters(monsters) {
+            app.innerHTML = monsters.map(function (monster) {
+                return `<div class="grid" aria-live"polite">
+                            <button data-monster="${monster.name}">
+                                <img src="https://gist.githubusercontent.com/cferdinandi/d40f6a589c60eeb7fa10de9cca212cec/raw/29eaac94f4201691cf31d76787c6f867838d63f0/door.svg" data-monster="${monster.name}" alt="A brown door" />
+                                Reveal monster
+                            </a>
+                        </div>`;
+            }).join('');
+        }
+
+        // Display the monsters, but with a shuffled copy of our original array.
+        displayMonsters(Array.from(shuffle(monsters)));
+
+        document.addEventListener('click', function (event) {
+            // Check if we clicked one of our reveal monster buttons and reveal the monster
+            console.log(event.target);
+            if (event.target.matches('[data-monster]')) {
+                revealMonster(event.target);
+            }
+            // Check if the reshuffle button was clicked and reshuffle the monsters
+            else if (event.target.matches('#reshuffle')) {
+                displayMonsters(Array.from(shuffle(monsters)));
+            }
+
+        });
+
+    </script>
+</body>
+
+</html>
