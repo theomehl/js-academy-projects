@@ -32,11 +32,26 @@
         }
 
         /**
- * Make sure images scale
- */
+         * Make sure images scale
+         */
         img {
             height: auto;
             max-width: 100%;
+        }
+
+         /**
+          * Add a class to visually hide content, but still read it aloud to screen readers  
+          */
+        .visuallyHidden {
+            border: 0;
+            clip: rect(0 0 0 0);
+            height: 1px;
+            margin: -1px;
+            overflow: hidden;
+            padding: 0;
+            position: absolute;
+            white-space: nowrap;
+            width: 1px;
         }
     </style>
 </head>
@@ -44,8 +59,8 @@
 <body>
 
     <h1>Monsters! Game</h1>
-    <button id="reshuffle">Reshuffle</button>
-    <div id="app" class="row"></div>
+    <div class="visuallyHidden" aria-live="polite"></div>
+    <div id="app"></div>
 
     <footer>
         <hr>
@@ -62,60 +77,68 @@
     </footer>
 
     <script>
-        // Store the monsters and socks with their names and alt text for use later.
+
+        /**
+         * Variables
+         */
         let monsters = [
             {
-                'name': 'monster1',
-                'alt': 'A yellow monster with a little tail, tuft of hair on top and a curly nose'
+                name: 'monster1',
+                alt: 'A yellow monster with a little tail, tuft of hair on top and a curly nose'
             },
             {
-                'name': 'monster2',
-                'alt': 'A yellow monster with, one eye, jagged teeth, and skinny arms and legs.'
+                name: 'monster2',
+                alt: 'A yellow monster with, one eye, jagged teeth, and skinny arms and legs.'
             },
             {
-                'name': 'monster3',
-                'alt': 'A green monster with a body in a u shape with its mouth in the middle with sharp teeth. It has two eyes at the top of each end, bendy arms with three fingers, and two tiny stick legs.'
+                name: 'monster3',
+                alt: 'A green monster with a body in a u shape with its mouth in the middle with sharp teeth. It has two eyes at the top of each end, bendy arms with three fingers, and two tiny stick legs.'
             },
             {
-                'name': 'monster4',
-                'alt': 'A red monster with a flat expression. It has two downward-facing horns and four arms with three fingers on each hand.'
+                name: 'monster4',
+                alt: 'A red monster with a flat expression. It has two downward-facing horns and four arms with three fingers on each hand.'
             },
             {
-                'name': 'monster5',
-                'alt': 'A circular green monster with one eye. It has spikes on either side of its face, two legs, and two hooks for arms. He looks a little sad.'
+                name: 'monster5',
+                alt: 'A circular green monster with one eye. It has spikes on either side of its face, two legs, and two hooks for arms. He looks a little sad.'
             },
             {
-                'name': 'monster6',
-                'alt': 'A triangular green monster who is either doing a headstand, or he is naturally an upside down triangle shape.'
+                name: 'monster6',
+                alt: 'A triangular green monster who is either doing a headstand, or he is naturally an upside down triangle shape.'
             },
             {
-                'name': 'monster7',
-                'alt': 'A purple monster with one large eye and a rounded head. It has two tentacles for arms and two stumpy legs.'
+                name: 'monster7',
+                alt: 'A purple monster with one large eye and a rounded head. It has two tentacles for arms and two stumpy legs.'
             },
             {
-                'name': 'monster8',
-                'alt': 'An egg shaped purple monster. It has two little ears on top, one eye, and a flat mouth.'
+                name: 'monster8',
+                alt: 'An egg shaped purple monster. It has two little ears on top, one eye, and a flat mouth.'
             },
             {
-                'name': 'monster9',
-                'alt': 'A blue monster with three vertical balls for a body. It has two wide-set eyes on either side of its face, three dots for a mouth, two raise arms, two feathers on either side, and thre stick legs.'
+                name: 'monster9',
+                alt: 'A blue monster with three vertical balls for a body. It has two wide-set eyes on either side of its face, three dots for a mouth, two raise arms, two feathers on either side, and thre stick legs.'
             },
             {
-                'name': 'monster10',
-                'alt': 'Blue monster with two stick legs, sharp teeth, and two round eyes at the end of eyestalks'
+                name: 'monster10',
+                alt: 'Blue monster with two stick legs, sharp teeth, and two round eyes at the end of eyestalks'
             },
             {
-                'name': 'monster11',
-                'alt': 'A tall, gray monster with a big, thin smile and fur. He has two thick arms and two stumpy legs.'
+                name: 'monster11',
+                alt: 'A tall, gray monster with a big, thin smile and fur. He has two thick arms and two stumpy legs.'
             },
             {
-                'name': 'sock',
-                'alt': 'A pair of white tube socks.'
+                name: 'sock',
+                alt: 'A pair of tube socks.'
             }
         ];
 
-        // Grab our app wrapper element. 
         let app = document.querySelector('#app');
+        let screenReaderStatus = document.querySelector('.visuallyHidden');
+        let monsterCount = 0;
+
+        /**
+         * Functions
+         */
 
         /**
          * Randomly shuffle an array
@@ -143,54 +166,100 @@
             return array;
 
         }
-        function gameOver() {
-            alert('Sorry. You found the sock and lost.');
-        }
-        function revealMonster(target) {
-            // Get the monster name from the data attribute of the button
-            let monster = target.getAttribute('data-monster');
-            // Get the closest button of the clicked element
-            let button = target.closest('button');
-            console.log(button);
-            // Grab the monster data from our array by matching the data attribute 
-            // with the monster array monster name
-            let monsterData = monsters.find(function (monsterItem) {
-                return monsterItem.name === monster;
-            });
-            // Create a new img element to replace the anchor
+
+        function revealMonster(monster, button) {
+
             let image = document.createElement('img');
-            image.src = `https://gist.githubusercontent.com/cferdinandi/14e80a8e5383d962d4ac65386406993b/raw/9f34ac3b4676e4ce62d51fe7c9b06845e4657f10/${monsterData.name}.svg`;
-            image.alt = monsterData.alt;
-            // Replace the anchor with the new image and a message with what you chose. 
-            button.replaceWith(image, monster == 'sock' ? 'I\'m sorry. You found the socks and lost.' : 'You found a monster!');
-            // Check if the monster item is a sock and display a game over message if we picked the sock
+            image.src = `https://gist.githubusercontent.com/cferdinandi/14e80a8e5383d962d4ac65386406993b/raw/9f34ac3b4676e4ce62d51fe7c9b06845e4657f10/${monster.name}.svg`;
+            image.alt = monster.alt;
+
+            // Replace the entire button rather than the inner image to remove interactivity
+            button.replaceWith(image);
         }
 
-        // Use the data from our monsters with template literals with HTML markup to add them to our document. 
         function displayMonsters(monsters) {
-            app.innerHTML = monsters.map(function (monster) {
-                return `<div class="grid" aria-live"polite">
-                            <button data-monster="${monster.name}">
-                                <img src="https://gist.githubusercontent.com/cferdinandi/d40f6a589c60eeb7fa10de9cca212cec/raw/29eaac94f4201691cf31d76787c6f867838d63f0/door.svg" data-monster="${monster.name}" alt="A brown door" />
-                                Reveal monster
-                            </a>
-                        </div>`;
-            }).join('');
+
+            // Use the map() index value instead of the monster name so someone can't 
+            // use the browser inspector to cheat
+            app.innerHTML = ` 
+                <div class="row"> 
+                    ${monsters.map(function (monster, index) {
+                        return `
+                            <div class="grid" aria-live"polite">
+                                <button data-monster="${index}">
+                                    <img src="https://gist.githubusercontent.com/cferdinandi/d40f6a589c60eeb7fa10de9cca212cec/raw/29eaac94f4201691cf31d76787c6f867838d63f0/door.svg" alt="Door ${index}" />
+                                </button>
+                            </div>`;
+                    }).join('')}
+                </div>
+            `;
         }
 
-        // Display the monsters, but with a shuffled copy of our original array.
-        displayMonsters(Array.from(shuffle(monsters)));
+        function displayGameOver() {
+
+            app.innerHTML = `
+                <h2>2319! You found the socks and lost.</h2>
+                <p>You found ${monsterCount} out of ${monsters.length-1} monsters.</p>
+                <button id="reshuffle">Play again?</button>
+            `;
+
+            // Update the text for our hidden screen reader element 
+            // so a screen reader user has context for the loss status 
+            screenReaderStatus.textContent = `Shoot, you lost. But you did find ${monsterCount} out of ${monsters.length-1} monsters. Click the button to play again.`;
+
+        }
+
+        function displayGameWin() {
+
+            app.innerHTML = `
+                <h2>Congratulations! You found all the monsters and won.</h2>
+                <button id="reshuffle">Play again?</button>
+            `;
+
+            // Update the text for our hidden screen reader element 
+            // so a screen reader user has context for the win status           
+            screenReaderStatus.textContent = 'You won! Click the button to play again.'
+        }
+
+        /** 
+         * Event listener functions for handling our different types of 
+         * clicks with event delegation.   
+         */
+
+        function handleMonsterClick(event) {
+
+            let button = event.target.closest('[data-monster]');
+            if (!button) return;
+            let monster = monsters[button.getAttribute('data-monster')];
+            if (!monster) return;
+
+            revealMonster(monster, button);
+
+            if (monster.name === 'sock') {
+                displayGameOver();
+                return;
+            }
+            monsterCount++
+            if (monsterCount === (monsters.length - 1)) {
+                displayGameWin();
+            }
+
+        }
+
+        function handleReshuffleClick(event) {
+
+            if (!event.target.matches('#reshuffle')) return;
+            displayMonsters(shuffle(monsters));
+            monsterCount = 0;
+
+        }
+
+        displayMonsters(shuffle(monsters));
 
         document.addEventListener('click', function (event) {
-            // Check if we clicked one of our reveal monster buttons and reveal the monster
-            console.log(event.target);
-            if (event.target.matches('[data-monster]')) {
-                revealMonster(event.target);
-            }
-            // Check if the reshuffle button was clicked and reshuffle the monsters
-            else if (event.target.matches('#reshuffle')) {
-                displayMonsters(Array.from(shuffle(monsters)));
-            }
+
+            handleMonsterClick(event);
+            handleReshuffleClick(event);
 
         });
 
