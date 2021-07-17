@@ -59,6 +59,7 @@
 <body>
 
     <h1>Monsters! Game</h1>
+    <p>Click the doors and try to find all the monsters. If you find the socks, you lose.</p>
     <div class="visuallyHidden" aria-live="polite"></div>
     <div id="app"></div>
 
@@ -205,7 +206,7 @@
 
             // Update the text for our hidden screen reader element 
             // so a screen reader user has context for the loss status 
-            screenReaderStatus.textContent = `Shoot, you lost. But you did find ${monsterCount} out of ${monsters.length-1} monsters. Click the button to play again.`;
+            screenReaderStatus.textContent = `Shoot, you found the socks and lost. But you did find ${monsterCount} out of ${monsters.length-1} monsters. Click the button to play again.`;
 
         }
 
