@@ -9,3 +9,6 @@ Projects from the June 2021 Vanilla JS Academy. My scrapbook of drafts.
 7. [Random Ron quote generator](/project-7)
 8. [Random Ron quote generator without duplicates](/project-8)
 9. [Random Ron quote generator without duplicates using an async function](/project-9)
+10. [Dragon Trainer Monthly](/project-10)
+11. [Dragon Trainer Monthly with author bio info](/project-11)
+12. [Dragon Trainer Monthly - Sanitized 3rd party data](/project-12)
